@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Challenge</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRC — Login</title>
+  <style>
+    body { font-family: monospace; background: #1a1a1a; color: #00ff00;
+           display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    input { background: #000; color: #00ff00; border: 1px solid #00ff00; padding: 8px; font-family: monospace; }
+    button { background: #00ff00; color: #000; border: none; padding: 8px 16px;
+             font-family: monospace; cursor: pointer; font-weight: bold; }
+    .box { border: 1px solid #00ff00; padding: 2rem; min-width: 300px; }
+  </style>
 </head>
 <body>
-<h1>IRC — HTTP Server</h1>
-<p>Log in below.</p>
+  <div class="box">
+    <h1>&gt; IRC Login</h1>
+    <p>Enter a nickname and channel to join.</p>
+    <input id="nick" type="text" placeholder="Nickname" /><br><br>
+    <input id="channel" type="text" placeholder="Channel e.g. #general" /><br><br>
+    <button onclick="join()">Connect</button>
+  </div>
+  <script>
+    function join() {
+      const nick = document.getElementById('nick').value.trim();
+      const channel = document.getElementById('channel').value.trim();
+      if (nick && channel) {
+        // redirect to chat page later
+        alert(`Joining ${channel} as ${nick}...`);
+      }
+    }
+  </script>
 </body>
 </html>
