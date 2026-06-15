@@ -6,112 +6,65 @@
   <title>IRC — Connect</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
-      background: #0d0d0d;
-      color: #e0e0e0;
+      background: #0d0d0d; color: #e0e0e0;
       font-family: 'Courier New', Courier, monospace;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 100vh; display: flex; align-items: center; justify-content: center;
     }
-
-    .terminal {
-      width: 420px;
-      border: 1px solid #2a2a2a;
-      background: #111;
-    }
-
+    .terminal { width: 440px; border: 1px solid #2a2a2a; background: #111; }
     .terminal-bar {
-      background: #1a1a1a;
-      border-bottom: 1px solid #2a2a2a;
-      padding: 10px 14px;
-      font-size: 12px;
-      color: #555;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      background: #1a1a1a; border-bottom: 1px solid #2a2a2a;
+      padding: 10px 14px; font-size: 12px; color: #555;
+      display: flex; align-items: center; gap: 8px;
     }
-
     .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dot.red   { background: #ff5f56; }
-    .dot.yellow{ background: #ffbd2e; }
-    .dot.green { background: #27c93f; }
-
+    .dot.red    { background: #ff5f56; }
+    .dot.yellow { background: #ffbd2e; }
+    .dot.green  { background: #27c93f; }
     .terminal-body { padding: 28px; }
-
-    .prompt-line {
-      color: #27c93f;
-      font-size: 13px;
-      margin-bottom: 24px;
-    }
-
+    .prompt-line { color: #27c93f; font-size: 13px; margin-bottom: 24px; }
     .prompt-line span { color: #555; }
-
-    h1 {
-      font-size: 20px;
-      font-weight: normal;
-      color: #fff;
-      margin-bottom: 6px;
-      letter-spacing: 1px;
-    }
-
-    .subtitle {
-      font-size: 12px;
-      color: #444;
-      margin-bottom: 28px;
-    }
-
+    h1 { font-size: 20px; font-weight: normal; color: #fff; margin-bottom: 6px; letter-spacing: 1px; }
+    .subtitle { font-size: 12px; color: #444; margin-bottom: 28px; }
     .field { margin-bottom: 16px; }
-
-    label {
-      display: block;
-      font-size: 11px;
-      color: #555;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
+    label { display: block; font-size: 11px; color: #555; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
     input {
-      width: 100%;
-      background: #0d0d0d;
-      border: 1px solid #2a2a2a;
-      color: #e0e0e0;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 14px;
-      padding: 10px 12px;
-      outline: none;
-      transition: border-color 0.15s;
+      width: 100%; background: #0d0d0d; border: 1px solid #2a2a2a;
+      color: #e0e0e0; font-family: 'Courier New', Courier, monospace;
+      font-size: 14px; padding: 10px 12px; outline: none; transition: border-color 0.15s;
     }
-
     input:focus { border-color: #27c93f; }
+    input.error-input { border-color: #ff5f56; }
     input::placeholder { color: #333; }
 
-    button {
-      margin-top: 8px;
-      width: 100%;
-      background: #27c93f;
-      color: #0d0d0d;
-      border: none;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 12px;
-      cursor: pointer;
-      letter-spacing: 1px;
-      transition: background 0.15s;
+    .channels-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;
     }
-
-    button:hover { background: #2edb46; }
-
-    .error {
-      margin-top: 12px;
-      font-size: 12px;
-      color: #ff5f56;
-      display: none;
+    .channel-btn {
+      background: #0d0d0d; border: 1px solid #2a2a2a; color: #555;
+      font-family: 'Courier New', Courier, monospace; font-size: 12px;
+      padding: 8px 10px; cursor: pointer; text-align: left;
+      transition: all 0.15s; letter-spacing: 0.5px;
     }
+    .channel-btn:hover { border-color: #27c93f; color: #27c93f; }
+    .channel-btn.selected { border-color: #27c93f; color: #27c93f; background: #0a1a0a; }
+    .channel-btn .ch-hash { color: #27c93f; margin-right: 2px; }
+    .channel-btn.selected .ch-hash { color: #27c93f; }
+
+    .connect-btn {
+      margin-top: 20px; width: 100%; background: #27c93f; color: #0d0d0d;
+      border: none; font-family: 'Courier New', Courier, monospace;
+      font-size: 14px; font-weight: bold; padding: 12px; cursor: pointer;
+      letter-spacing: 1px; transition: background 0.15s;
+    }
+    .connect-btn:hover { background: #2edb46; }
+    .connect-btn:disabled { background: #1a3a1a; color: #2a5a2a; cursor: not-allowed; }
+
+    .error { margin-top: 10px; font-size: 12px; color: #ff5f56; display: none; }
+    .nick-status { margin-top: 6px; font-size: 11px; height: 14px; }
+    .nick-status.ok   { color: #27c93f; }
+    .nick-status.taken { color: #ff5f56; }
+    .nick-status.checking { color: #555; }
   </style>
 </head>
 <body>
@@ -125,43 +78,112 @@
     <div class="terminal-body">
       <div class="prompt-line">$ <span>./connect.sh</span></div>
       <h1>IRC CHAT</h1>
-      <p class="subtitle">Enter a nickname and channel to join.</p>
+      <p class="subtitle">Pick a nickname and a channel to join.</p>
 
       <div class="field">
         <label>Nickname</label>
         <input id="nick" type="text" placeholder="e.g. alice" maxlength="20" autocomplete="off" />
+        <div class="nick-status" id="nick-status"></div>
       </div>
+
       <div class="field">
         <label>Channel</label>
-        <input id="channel" type="text" placeholder="e.g. general" maxlength="30" autocomplete="off" />
+        <div class="channels-grid" id="channels-grid"></div>
       </div>
-      <button onclick="connect()">CONNECT →</button>
-      <p class="error" id="error">Please enter a nickname and channel.</p>
+
+      <button class="connect-btn" id="connect-btn" onclick="connect()" disabled>CONNECT →</button>
+      <p class="error" id="error"></p>
     </div>
   </div>
 
   <script>
+    const CHANNELS = ['general', 'announcements', 'gaming', 'tech', 'random'];
+    let selectedChannel = null;
+    let nickOk = false;
+    let checkTimeout = null;
+
+    // Build channel buttons
+    const grid = document.getElementById('channels-grid');
+    CHANNELS.forEach(ch => {
+      const btn = document.createElement('button');
+      btn.className = 'channel-btn';
+      btn.innerHTML = `<span class="ch-hash">#</span>${ch}`;
+      btn.dataset.ch = ch;
+      btn.onclick = () => selectChannel(ch);
+      grid.appendChild(btn);
+    });
+
+    function selectChannel(ch) {
+      selectedChannel = ch;
+      document.querySelectorAll('.channel-btn').forEach(b => {
+        b.classList.toggle('selected', b.dataset.ch === ch);
+      });
+      updateBtn();
+    }
+
+    function updateBtn() {
+      document.getElementById('connect-btn').disabled = !(nickOk && selectedChannel);
+    }
+
+    // Nick availability check
+    const nickInput = document.getElementById('nick');
+    const nickStatus = document.getElementById('nick-status');
+
+    nickInput.addEventListener('input', () => {
+      clearTimeout(checkTimeout);
+      const val = nickInput.value.trim();
+      nickOk = false;
+      updateBtn();
+
+      if (!val) { nickStatus.textContent = ''; nickStatus.className = 'nick-status'; return; }
+
+      nickStatus.textContent = 'checking...';
+      nickStatus.className = 'nick-status checking';
+
+      checkTimeout = setTimeout(async () => {
+        const res = await fetch(`/check_nick?nick=${encodeURIComponent(val)}`);
+        const data = await res.json();
+        if (data.taken) {
+          nickStatus.textContent = '✗ nickname taken';
+          nickStatus.className = 'nick-status taken';
+          nickOk = false;
+        } else {
+          nickStatus.textContent = '✓ nickname available';
+          nickStatus.className = 'nick-status ok';
+          nickOk = true;
+        }
+        updateBtn();
+      }, 400);
+    });
+
     function connect() {
-      const nick = document.getElementById('nick').value.trim();
-      const channel = document.getElementById('channel').value.trim().replace(/^#/, '');
+      const nick = nickInput.value.trim();
       const err = document.getElementById('error');
 
-      if (!nick || !channel) {
+      if (!nick || !selectedChannel) {
+        err.textContent = 'Please enter a nickname and select a channel.';
         err.style.display = 'block';
         return;
       }
       err.style.display = 'none';
-
-      // Store in sessionStorage and redirect to chat
       sessionStorage.setItem('nick', nick);
-      sessionStorage.setItem('channel', channel);
+      sessionStorage.setItem('channel', selectedChannel);
       window.location.href = '/chat';
     }
 
-    // Allow Enter key
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Enter') connect();
-    });
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') connect(); });
+
+    // Show error if redirected back from chat due to race condition
+    const loginError = sessionStorage.getItem('login_error');
+    if (loginError) {
+      const err = document.getElementById('error');
+      err.textContent = loginError;
+      err.style.display = 'block';
+      sessionStorage.removeItem('login_error');
+      // Restore their channel selection
+      const prevChannel = sessionStorage.getItem('channel');
+      if (prevChannel) selectChannel(prevChannel);
+    }
   </script>
 </body>
 </html>
