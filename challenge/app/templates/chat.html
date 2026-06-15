@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRC — Chat</title>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0d0d0d;
+      color: #e0e0e0;
+      font-family: 'Courier New', Courier, monospace;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top bar ── */
+    #topbar {
+      background: #111;
+      border-bottom: 1px solid #2a2a2a;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    #topbar .left { display: flex; align-items: center; gap: 12px; }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.red    { background: #ff5f56; }
+    .dot.yellow { background: #ffbd2e; }
+    .dot.green  { background: #27c93f; }
+    .dots { display: flex; gap: 6px; }
+
+    #channel-label {
+      font-size: 13px;
+      color: #27c93f;
+    }
+
+    #nick-label {
+      font-size: 12px;
+      color: #444;
+    }
+
+    #leave-btn {
+      background: none;
+      border: 1px solid #2a2a2a;
+      color: #555;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11px;
+      padding: 4px 10px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: all 0.15s;
+    }
+    #leave-btn:hover { border-color: #ff5f56; color: #ff5f56; }
+
+    /* ── Messages ── */
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    #messages::-webkit-scrollbar { width: 4px; }
+    #messages::-webkit-scrollbar-track { background: #0d0d0d; }
+    #messages::-webkit-scrollbar-thumb { background: #2a2a2a; }
+
+    .msg {
+      font-size: 13px;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .msg .time { color: #333; margin-right: 6px; }
+    .msg .user { color: #27c93f; margin-right: 6px; }
+    .msg.system .user { color: #555; }
+    .msg.system .text { color: #444; font-style: italic; }
+    .msg.own .user { color: #ffbd2e; }
+
+    /* ── Input bar ── */
+    #inputbar {
+      border-top: 1px solid #2a2a2a;
+      background: #111;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    #prompt { color: #27c93f; font-size: 13px; white-space: nowrap; }
+
+    #msg-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #e0e0e0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      outline: none;
+      caret-color: #27c93f;
+    }
+
+    #msg-input::placeholder { color: #333; }
+
+    #send-btn {
+      background: none;
+      border: 1px solid #2a2a2a;
+      color: #27c93f;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 12px;
+      padding: 6px 12px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: all 0.15s;
+    }
+    #send-btn:hover { background: #27c93f; color: #0d0d0d; }
+  </style>
+</head>
+<body>
+
+  <div id="topbar">
+    <div class="left">
+      <div class="dots">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+      </div>
+      <span id="channel-label">#general</span>
+      <span id="nick-label">nick</span>
+    </div>
+    <button id="leave-btn" onclick="leave()">LEAVE ×</button>
+  </div>
+
+  <div id="messages"></div>
+
+  <div id="inputbar">
+    <span id="prompt">&gt;</span>
+    <input id="msg-input" type="text" placeholder="Type a message..." autocomplete="off" />
+    <button id="send-btn" onclick="sendMessage()">SEND</button>
+  </div>
+
+  <script>
+    const nick = sessionStorage.getItem('nick');
+    const channel = sessionStorage.getItem('channel');
+
+    // Redirect back if no session
+    if (!nick || !channel) window.location.href = '/';
+
+    document.getElementById('channel-label').textContent = '#' + channel;
+    document.getElementById('nick-label').textContent = nick;
+    document.getElementById('prompt').textContent = nick + ' >';
+
+    const socket = io();
+
+    socket.on('connect', () => {
+      socket.emit('join', { username: nick, room: channel });
+    });
+
+    socket.on('message', (data) => {
+      addMessage(data);
+    });
+
+    function addMessage(data) {
+      const box = document.getElementById('messages');
+      const div = document.createElement('div');
+
+      const isOwn = data.user === nick;
+      const isSystem = data.type === 'system';
+
+      div.classList.add('msg');
+      if (isSystem) div.classList.add('system');
+      if (isOwn) div.classList.add('own');
+
+      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      div.innerHTML = `<span class="time">[${time}]</span><span class="user">${escapeHtml(data.user)}</span><span class="text">${escapeHtml(data.text)}</span>`;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('msg-input');
+      const text = input.value.trim();
+      if (!text) return;
+      socket.emit('message', { text, room: channel });
+      input.value = '';
+    }
+
+    function leave() {
+      socket.disconnect();
+      sessionStorage.clear();
+      window.location.href = '/';
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    document.getElementById('msg-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') sendMessage();
+    });
+  </script>
+</body>
+</html>
