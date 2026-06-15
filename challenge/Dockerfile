@@ -1,7 +1,7 @@
-FROM alpine:3.19
-RUN apk add --no-cache python3
-WORKDIR /srv/www
-COPY index.html .
-WORKDIR /srv
+FROM python:3.12-alpine
+WORKDIR /app
+COPY app/requirements.txt .
+RUN pip install -r requirements.txt
+COPY app/ .
 EXPOSE 8090
-CMD ["python3", "-m", "http.server", "8090", "--directory", "www"]
+CMD ["python", "app.py"]
