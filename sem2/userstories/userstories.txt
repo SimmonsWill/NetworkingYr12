@@ -1,0 +1,34 @@
+1. Grocery Store
+As a customer,
+I want to be able to see sales,
+So to know whether to specifically look out for them.
+
+Acceptance Criteria
+- User can see separate sales page
+- User can see original price before sale
+- User can find location of items on sale in store
+
+
+2. Fast food app
+As a customer,
+I want to see nutritional value,
+So that the customer can judge the health value.
+
+Acceptance Criteria
+- User can see calories
+- User can see ingredients
+- User can see nutrition table
+
+
+3. Public transport app
+As a customer, 
+I want to be able to see relevant time and route information
+So to know where the bus will take me and at what time.
+
+Acceptance Criteria
+- Live bus map
+- Timetable
+- Routes of selected bus
+- Notifications for traffic changes or delays.
+
+
