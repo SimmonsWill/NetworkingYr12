@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stage 2</title>
+</head>
+<body>
+    <h1>Stage 2</h1>
+    <p>Download the file below. It's protected with a password.</p>
+    <p>Riddle: On a Linux system, this is the username of the superuser — the one with unrestricted access. Run <code>whoami</code> as that user and you'll see it. What is it?</p>
+
+    <p><a href="/static/artifacts/secret.zip">Download secret.zip</a></p>
+
+    <p>Once you've unzipped it, find the flag inside and submit it below.</p>
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form action="/stage/2/submit" method="post">
+        <input type="text" name="answer" placeholder="Type the flag from inside the zip">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

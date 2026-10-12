@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stage 1</title>
+</head>
+<body>
+    <h1>Stage 1</h1>
+    <p>What is the most used programming language?</p>
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form action="/stage/1/submit" method="post">
+        <input type="text" name="answer" placeholder="Type your answer (no caps)">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
