@@ -4,11 +4,7 @@ app = Flask(__name__)
 
 # Correct answers live here, server-side only.
 STAGE_1_ANSWERS = {
-    "q1": "c",
-    "q2": "a",
-    "q3": "b",
-    "q4": "b",
-    "q5": "c"
+    "q1" : "c"
 }
 
 STAGE_2_ANSWER = "stage2flag-93a2f"
@@ -61,7 +57,7 @@ def stage3():
     return "<h1>Stage 3</h1><p>Coming soon.</p>"
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     app.run(debug=True)
 
 

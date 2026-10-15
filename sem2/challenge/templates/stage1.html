@@ -4,16 +4,26 @@
     <title>Stage 1</title>
 </head>
 <body>
-    <h1>Stage 1</h1>
-    <p>What is the most used programming language?</p>
+<h3>1. Which programming language is most widely used?</h3>
 
-    {% if error %}
-        <p>{{ error }}</p>
-    {% endif %}
+<label>
+    <input type="radio" name="q1" value="a" required>
+    A) C
+</label><br>
 
-    <form action="/stage/1/submit" method="post">
-        <input type="text" name="answer" placeholder="Type your answer (no caps)">
-        <button type="submit">Submit</button>
-    </form>
+<label>
+    <input type="radio" name="q1" value="b">
+    B) Python
+</label><br>
+
+<label>
+    <input type="radio" name="q1" value="c">
+    C) JavaScript
+</label><br>
+
+<label>
+    <input type="radio" name="q1" value="d">
+    D) Java
+</label><br>	
 </body>
 </html>
