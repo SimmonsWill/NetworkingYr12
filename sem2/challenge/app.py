@@ -3,11 +3,17 @@ from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
 # Correct answers live here, server-side only.
+
 STAGE_1_ANSWERS = {
-    "q1" : "c"
+    "q1": "a",
+    "q2": "a",
+    "q3": "b",
+    "q4": "c",
+    "q5": "b"
 }
 
-STAGE_2_ANSWER = "stage2flag-93a2f"
+
+STAGE_2_ANSWER = "skibidi6767"
 
 
 @app.route("/")

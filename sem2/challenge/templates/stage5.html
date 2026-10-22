@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stage 5 </title>
+    <title>The FINALE</title>
+</head>
+<body>
+    <h1>Stage 5</h1>
+    <p>Instruction.</p>
+
+    <p><a href="/static/artifacts/placeholder">Download placeholder</a></p>
+
+    <p>Once you've downloaded it, find the flag inside and submit it below.</p>
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+<form action="{{ url_for('stage5_submit') }}" method="post"></form>
+        <input type="text" name="answer" placeholder="Type the flag from inside the file">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

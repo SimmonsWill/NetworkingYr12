@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stage 3</title>
+</head>
+<body>
+    <h1>Stage 3</h1>
+    <p>Download the file below.</p>
+
+    <p><a href="/static/artifacts/secret.jpg">Download secret.jpg</a></p>
+
+    <p>You must find the location of the photo and submit it below.</p>
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form action="{{ url_for('stage3_submit') }}" method="post">
+        <input type="text" name="answer" placeholder="Type the location of the photo">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

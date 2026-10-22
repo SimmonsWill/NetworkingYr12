@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stage 4</title>
+</head>
+<body>
+    <h1>Stage 4</h1>
+    <p>Download the file below.</p>
+
+    <p><a href="/static/artifacts/secret.pcap">Download secret.pcap</a></p>
+
+    <p>You must analyse the packets and find the destination IP address for a login attempt.</p>
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+<form action="{{ url_for('stage4_submit') }}" method="post"></form>>
+        <input type="text" name="answer" placeholder="Type the destination IP address here">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

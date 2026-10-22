@@ -1,29 +1,136 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Stage 1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 1 - Chain Reaction</title>
 </head>
 <body>
-<h3>1. Which programming language is most widely used?</h3>
+    <h1>Chain Reaction</h1>
+    <h2>Stage 1: General ComputerKnowledge</h2>
 
-<label>
-    <input type="radio" name="q1" value="a" required>
-    A) C
-</label><br>
+    <p>Answer all five questions correctly to unlock Stage 2.</p>
 
-<label>
-    <input type="radio" name="q1" value="b">
-    B) Python
-</label><br>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
 
-<label>
-    <input type="radio" name="q1" value="c">
-    C) JavaScript
-</label><br>
+    <form action="{{ url_for('stage1_submit') }}" method="POST">
 
-<label>
-    <input type="radio" name="q1" value="d">
-    D) Java
-</label><br>	
+        <h3>1. Which programming language is often considered the "mother of modern programming languages"?</h3>
+
+        <label>
+            <input type="radio" name="q1" value="a" required>
+            A) C
+        </label><br>
+
+        <label>
+            <input type="radio" name="q1" value="b">
+            B) Python
+        </label><br>
+
+        <label>
+            <input type="radio" name="q1" value="c">
+            C) JavaScript
+        </label><br>
+
+        <label>
+            <input type="radio" name="q1" value="d">
+            D) Java
+        </label><br>
+
+        <h3>2. Which command lists files and directories in the terminal?</h3>
+
+        <label>
+            <input type="radio" name="q2" value="a" required>
+            A) ls
+        </label><br>
+
+        <label>
+            <input type="radio" name="q2" value="b">
+            B) cd
+        </label><br>
+
+        <label>
+            <input type="radio" name="q2" value="c">
+            C) mkdir
+        </label><br>
+
+        <label>
+            <input type="radio" name="q2" value="d">
+            D) pwd
+        </label><br>
+
+        <h3>3. What command allows you to log into a remote server?</h3>
+
+        <label>
+            <input type="radio" name="q3" value="a" required>
+            A) scp
+        </label><br>
+
+        <label>
+            <input type="radio" name="q3" value="b">
+            B) ssh
+        </label><br>
+
+        <label>
+            <input type="radio" name="q3" value="c">
+            C) cd
+        </label><br>
+
+        <label>
+            <input type="radio" name="q3" value="d">
+            D) connect
+        </label><br>
+
+        <h3>4. Which of these is the real programming language?</h3>
+
+        <label>
+            <input type="radio" name="q4" value="a" required>
+            A) D++
+        </label><br>
+
+        <label>
+            <input type="radio" name="q4" value="b">
+            B) Cobra
+        </label><br>
+
+        <label>
+            <input type="radio" name="q4" value="c">
+            C) Malbolge
+        </label><br>
+
+        <label>
+            <input type="radio" name="q4" value="d">
+            D) Brainfucker
+        </label><br>
+
+        <h3>5. What does CPU stand for?</h3>
+
+        <label>
+            <input type="radio" name="q5" value="a" required>
+            A) Compiling Processing Unit
+        </label><br>
+
+        <label>
+            <input type="radio" name="q5" value="b">
+            B) Central Processing Unit
+        </label><br>
+
+        <label>
+            <input type="radio" name="q5" value="c">
+            C) Central Programming Unit
+        </label><br>
+
+        <label>
+            <input type="radio" name="q5" value="d">
+            D) Computer Programming Unit
+        </label><br>
+
+        <br>
+        <button type="submit">Submit Answers</button>
+
+    </form>
 </body>
 </html>
