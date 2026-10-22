@@ -14,6 +14,7 @@ STAGE_1_ANSWERS = {
 
 
 STAGE_2_ANSWER = "skibidi6767"
+STAGE_3_ANSWER = "KFC"
 
 
 @app.route("/")
@@ -60,8 +61,19 @@ def stage2_submit():
 
 @app.route("/stage/3")
 def stage3():
-    return "<h1>Stage 3</h1><p>Coming soon.</p>"
+    return render_template("stage3.html")
 
+@app.route("/stage/3/submit", methods=["POST"])
+def stage3_submit():
+    answer = request.form.get("answer", "").strip().lower()
+
+    if answer == STAGE_3_ANSWER:
+        return redirect(url_for("stage3"))
+
+    return render_template(
+        "stage3.html",
+        error="Incorrect, try again."
+    )
 
 if __name__ == "__main__": 
     app.run(debug=True)
