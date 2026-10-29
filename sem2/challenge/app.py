@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
@@ -12,9 +13,9 @@ STAGE_1_ANSWERS = {
     "q5": "b"
 }
 
-
 STAGE_2_ANSWER = "skibidi6767"
 STAGE_3_ANSWER = "KFC"
+STAGE_4_ANSWER = "192.0.2.10"
 
 
 @app.route("/")
@@ -30,7 +31,7 @@ def stage1():
 @app.route("/stage/1/submit", methods=["POST"])
 def stage1_submit():
     for question in STAGE_1_ANSWERS:
-        answer = request.form.get(question, "").lower()
+        answer = request.form.get(question, "").strip().lower()
 
         if answer != STAGE_1_ANSWERS[question]:
             return render_template(
@@ -39,6 +40,7 @@ def stage1_submit():
             )
 
     return redirect(url_for("stage2"))
+
 
 
 @app.route("/stage/2", methods=["GET"])
@@ -59,23 +61,45 @@ def stage2_submit():
     )
 
 
-@app.route("/stage/3")
+
+@app.route("/stage/3", methods=["GET"])
 def stage3():
     return render_template("stage3.html")
 
+
 @app.route("/stage/3/submit", methods=["POST"])
 def stage3_submit():
-    answer = request.form.get("answer", "").strip().lower()
+    answer = request.form.get("answer", "").strip().upper()
 
     if answer == STAGE_3_ANSWER:
-        return redirect(url_for("stage3"))
+        return redirect(url_for("stage4"))
 
     return render_template(
         "stage3.html",
         error="Incorrect, try again."
     )
 
-if __name__ == "__main__": 
+
+@app.route("/stage/4", methods=["GET"])
+def stage4():
+    return render_template("stage4.html")
+
+
+@app.route("/stage/4/submit", methods=["POST"])
+def stage4_submit():
+    answer = request.form.get("answer", "").strip()
+
+    if answer == STAGE_4_ANSWER:
+        return render_template(
+            "stage4.html",
+            success="Correct! You found the destination IP address. Stage 4 complete!"
+        )
+
+    return render_template(
+        "stage4.html",
+        error="Incorrect IP address. Analyse the packets and try again."
+    )
+
+
+if __name__ == "__main__":
     app.run(debug=True)
-
-
