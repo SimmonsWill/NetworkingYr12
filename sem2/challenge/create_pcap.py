@@ -139,9 +139,6 @@ for i in range(100):
         Raw(load=random.randbytes(random.randint(10, 80)))
     )
 
-# Shuffle packets so the player must investigate the capture
-random.shuffle(packets)
-
 # Write the capture file
 wrpcap("secret.pcap", packets)
 

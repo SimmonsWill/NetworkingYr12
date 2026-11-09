@@ -1,22 +1,15 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Stage 2</title>
-</head>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Stage 2</title></head>
 <body>
-    <h1>Stage 2</h1>
-    <p>Download the file below. It's protected with a 4 digit code (0000-9999).</p>
-
-    <p><a href="/static/artifacts/secret.zip">Download secret.zip</a></p>
-
-    <p>Once you've unzipped it, find the flag inside and submit it below.</p>
-
-    {% if error %}
-        <p>{{ error }}</p>
-    {% endif %}
-
-    <form action="/stage/2/submit" method="post">
-        <input type="text" name="answer" placeholder="Type the flag from inside the zip">
+    <h1>Stage 2: Archive Analysis</h1>
+    <p>Download the ZIP file. It is protected with a four-digit code (0000-9999).</p>
+    <p><a href="{{ url_for('static', filename='artifacts/secret.zip') }}" download>Download secret.zip</a></p>
+    <p>Extract the archive, find the flag, and submit it below.</p>
+    {% if error %}<p>{{ error }}</p>{% endif %}
+    <form action="{{ url_for('stage2_submit') }}" method="post">
+        <label for="answer">Flag:</label>
+        <input type="text" id="answer" name="answer" required>
         <button type="submit">Submit</button>
     </form>
 </body>

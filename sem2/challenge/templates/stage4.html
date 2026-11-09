@@ -1,48 +1,17 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Stage 4 - Chain Reaction</title>
-</head>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Stage 4</title></head>
 <body>
-
     <h1>Stage 4: Packet Analysis</h1>
-
-    <p>Download the packet capture file below.</p>
-
-    <p>
-        <a href="{{ url_for('static', filename='artifacts/secret.pcap') }}" download>
-            Download secret.pcap
-        </a>
-    </p>
-
-    <p>
-        Analyse the network packets using Wireshark.
-        Find the destination IP address associated with the login attempt.
-    </p>
-
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-
-    {% if success %}
-        <p style="color: green;">{{ success }}</p>
-    {% endif %}
-
-    <form action="{{ url_for('stage4_submit') }}" method="POST">
-
+    <p>Download the packet capture and open it in Wireshark.</p>
+    <p><a href="{{ url_for('static', filename='artifacts/secret.pcap') }}" download>Download secret.pcap</a></p>
+    <p>Find the destination IP address associated with the login attempt.</p>
+    {% if error %}<p>{{ error }}</p>{% endif %}
+    {% if success %}<p>{{ success }}</p>{% endif %}
+    <form action="{{ url_for('stage4_submit') }}" method="post">
         <label for="answer">Destination IP address:</label>
-
-        <input
-            type="text"
-            id="answer"
-            name="answer"
-            placeholder="e.g. 192.0.2.10"
-            required
-        >
-
-        <button type="submit">Submit Answer</button>
-
+        <input type="text" id="answer" name="answer" required>
+        <button type="submit">Submit</button>
     </form>
-
 </body>
 </html>
